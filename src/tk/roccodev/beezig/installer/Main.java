@@ -1,19 +1,36 @@
 package tk.roccodev.beezig.installer;
 
 import java.awt.EventQueue;
+import java.awt.Font;
+import java.awt.FontFormatException;
+import java.awt.GraphicsEnvironment;
 import java.io.File;
+import java.io.IOException;
 
-import tk.roccodev.beezig.installer.gui.MainGui;
+import tk.roccodev.beezig.installer.gui.MainGuiNew;
+import tk.roccodev.beezig.installer.utils.Exceptions;
+import tk.roccodev.beezig.installer.utils.I18N;
+import tk.roccodev.beezig.installer.utils.InstallationProcess;
 
 public class Main {
 
 	public static File MC_DIR;
-	public static File ZIG_DIR;
+
+	public static String VERSION = "2.0";
+
+	
+	public static InstallationProcess currentInstall = new InstallationProcess();
 	
 	
-	
-	public static void main(String args[]) {
+	public static void main(String args[]) throws FontFormatException, IOException {
 		
+		Thread.setDefaultUncaughtExceptionHandler(new Thread.UncaughtExceptionHandler() {
+			
+			@Override
+			public void uncaughtException(Thread t, Throwable e) {
+				Exceptions.handle(e);	
+			}
+		});
 		
 		String OS = System.getProperty("os.name").toLowerCase();
 		try{
@@ -31,19 +48,17 @@ public class Main {
 		}
 		if(!MC_DIR.exists()) MC_DIR.mkdir();
 		
+		I18N.init();
 
-		ZIG_DIR = new File(MC_DIR + "/the5zigmod");
+		GraphicsEnvironment ge = 
+		         GraphicsEnvironment.getLocalGraphicsEnvironment();
+		     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/assets/fonts/Montserrat.ttf")));
 		
-
-		if(!ZIG_DIR.exists()) {
-			System.out.println("No 5zig found!");
-			System.exit(0);
-		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainGui window = new MainGui();
-					window.frmLabymodTozig.setVisible(true);
+					MainGuiNew window = new MainGuiNew();
+					window.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

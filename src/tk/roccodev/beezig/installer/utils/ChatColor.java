@@ -1,7 +1,8 @@
 package tk.roccodev.beezig.installer.utils;
 
-import java.util.regex.*;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.regex.Pattern;
 
 
 /*
