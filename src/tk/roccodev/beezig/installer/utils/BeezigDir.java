@@ -24,5 +24,25 @@ public class BeezigDir {
 		
 	}
 	
+	public static boolean isBeezigForgePresent() {
+		File mcDir = new File(Main.MC_DIR + "/mods/");
+		File[] matches = mcDir.listFiles(new FilenameFilter() {
+			
+			@Override
+			public boolean accept(File arg0, String arg1) {
+				return arg1.toLowerCase().contains("beezigforge");
+			}
+		});
+		
+		if(matches == null) return false;
+		
+		return matches.length != 0;
+		
+	}
+	
+	public static boolean hasForge() {
+		File mcDir = new File(Main.MC_DIR + "/mods/");
+		return mcDir.exists();
+	}
 	
 }

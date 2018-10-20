@@ -8,6 +8,7 @@ public class InstallationProcess {
 	 */
 	private int channel; 
 
+	private boolean forge;
 
 	public int getChannel() {
 		return channel;
@@ -17,6 +18,13 @@ public class InstallationProcess {
 		this.channel = channel;
 	}
 
+	public boolean shouldInstallBeezigForge() {
+		return forge;
+	}
+	
+	public void installForge(boolean b) {
+		forge = b;
+	}
 
 	
 	

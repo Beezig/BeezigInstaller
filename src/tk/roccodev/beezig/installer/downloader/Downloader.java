@@ -26,7 +26,9 @@ public class Downloader {
 	private String toRename;
 	private boolean run = true;
 
-	public void download(File target, JProgressBar toUpdate, JButton toUpdateBtn) {
+	public void download(File target, JProgressBar toUpdate, JButton toUpdateBtn, boolean complete) {
+		toUpdate.setValue(0);
+		toUpdateBtn.setEnabled(true);
 		BufferedInputStream in = null;
 		FileOutputStream out = null;
 
@@ -80,6 +82,8 @@ public class Downloader {
 
 			target.renameTo(new File(pluginsDir + "/" + toRename));
 
+			if(!complete) return;
+			
 			toUpdateBtn.setAction(new AbstractAction() {
 
 				@Override

@@ -56,14 +56,23 @@ public class InstallBeezigStepDownload extends JPanel {
 			public void run() {
 				try {
 				String ur = null;
+				String beezigForgeUrl = null;
 				if(Main.currentInstall.getChannel() == 1) {
 					ur = "https://github.com/RoccoDev/Beezig-Deploy/raw/experimental/experimental/jar/Beezig.jar";
+					if(Main.currentInstall.shouldInstallBeezigForge()) 
+						beezigForgeUrl = "https://github.com/RoccoDev/Beezig-Deploy/raw/BeezigForge/BeezigForge.jar";
 				}
 				else {
-					JSONObject api = JSONUtils.json("https://api.github.com/repos/RoccoDev/Beezig/releases/latest");
+					JSONObject api = JSONUtils.json("https://api.github.com/repos/Beezig/Beezig/releases/latest");
 					JSONArray assets = (JSONArray) api.get("assets");
 					JSONObject first = (JSONObject) assets.get(0);
 					ur = (String) first.get("browser_download_url");
+					if(Main.currentInstall.shouldInstallBeezigForge()) {
+						JSONObject apiFrg = JSONUtils.json("https://api.github.com/repos/Beezig/BeezigForge/releases/latest");
+						JSONArray assetsFrg = (JSONArray) apiFrg.get("assets");
+						JSONObject firstFrg = (JSONObject) assetsFrg.get(0);
+						beezigForgeUrl = (String) firstFrg.get("browser_download_url");
+					}
 				}
 				
 				File target = new File(Main.MC_DIR + "/the5zigmod/plugins/bzgToUpdate.jar");
@@ -71,7 +80,16 @@ public class InstallBeezigStepDownload extends JPanel {
 				Downloader d = new Downloader(new URL(ur), "bzgToUpdate.jar", "Beezig.jar");
 				btnInstall.setAction(new SwingAction_1(d));
 				btnInstall.setText(I18N.s("general.cancel"));
-				d.download(target, bzgbtnBeta, btnInstall);
+				if(beezigForgeUrl != null) {
+					File targetFrg = new File(Main.MC_DIR + "/mods/bzgFrgToUpdate.jar");
+					if(!targetFrg.exists()) target.createNewFile();
+					d.download(target, bzgbtnBeta, btnInstall, false);
+					
+					d = new Downloader(new URL(beezigForgeUrl), "bzgFrgToUpdate.jar", "BeezigForge.jar");
+					
+					d.download(targetFrg, bzgbtnBeta, btnInstall, true);
+				}
+				else d.download(target, bzgbtnBeta, btnInstall, true);
 				} catch(Exception e ) {
 					e.printStackTrace();
 				}

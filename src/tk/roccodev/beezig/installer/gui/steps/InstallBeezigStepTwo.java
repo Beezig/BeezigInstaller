@@ -19,8 +19,10 @@ import tk.roccodev.beezig.installer.Main;
 import tk.roccodev.beezig.installer.gui.MainGuiNew;
 import tk.roccodev.beezig.installer.gui.StepManager;
 import tk.roccodev.beezig.installer.gui.components.BeezigButton;
+import tk.roccodev.beezig.installer.gui.components.BeezigCheckbox;
 import tk.roccodev.beezig.installer.gui.components.BeezigComboBox;
 import tk.roccodev.beezig.installer.gui.components.Gradient;
+import tk.roccodev.beezig.installer.utils.BeezigDir;
 import tk.roccodev.beezig.installer.utils.I18N;
 
 public class InstallBeezigStepTwo extends JPanel {
@@ -29,6 +31,7 @@ public class InstallBeezigStepTwo extends JPanel {
 	private BeezigComboBox<String> txt;
 	private final Action action = new SwingAction();
 	private final Action action_1 = new SwingAction_1();
+	private BeezigCheckbox bzgchckbxInstallBeezigforge;
 
 	
 	/**
@@ -66,7 +69,7 @@ public class InstallBeezigStepTwo extends JPanel {
 		txt.setBackground(bg);
 		txt.setFont(new Font("Montserrat", Font.BOLD, 20));
 		txt.addItem(I18N.s("channel.stable_long"));
-		txt.addItem(I18N.s("general.beta_long"));
+		txt.addItem(I18N.s("channel.beta_long"));
 		txt.setCursor(new Cursor(Cursor.HAND_CURSOR));
 		txt.setEditable(false);
 		
@@ -78,17 +81,17 @@ public class InstallBeezigStepTwo extends JPanel {
 		button.setBorderPainted(false);
 		button.setContentAreaFilled(false);
 		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		
+		bzgchckbxInstallBeezigforge = new BeezigCheckbox();
+		bzgchckbxInstallBeezigforge.setForeground(new Color(255, 255, 255));
+		bzgchckbxInstallBeezigforge.setFont(new Font("Montserrat", Font.BOLD, 15));
+		bzgchckbxInstallBeezigforge.setHorizontalAlignment(SwingConstants.CENTER);
+		bzgchckbxInstallBeezigforge.setText(I18N.s("step.channel.forge"));
+		if(!BeezigDir.hasForge()) bzgchckbxInstallBeezigforge.setVisible(false);
 
 		GroupLayout gl_gradient = new GroupLayout(gradient);
 		gl_gradient.setHorizontalGroup(
 			gl_gradient.createParallelGroup(Alignment.TRAILING)
-				.addGroup(gl_gradient.createSequentialGroup()
-					.addContainerGap()
-					.addGroup(gl_gradient.createParallelGroup(Alignment.LEADING)
-						.addComponent(lblBeezig, GroupLayout.DEFAULT_SIZE, 1296, Short.MAX_VALUE)
-						.addGroup(gl_gradient.createSequentialGroup()
-							.addComponent(button)
-							.addContainerGap())))
 				.addGroup(gl_gradient.createSequentialGroup()
 					.addContainerGap(355, Short.MAX_VALUE)
 					.addComponent(txt, GroupLayout.PREFERRED_SIZE, 606, GroupLayout.PREFERRED_SIZE)
@@ -97,23 +100,34 @@ public class InstallBeezigStepTwo extends JPanel {
 					.addGap(436)
 					.addComponent(btnInstall, GroupLayout.PREFERRED_SIZE, 432, GroupLayout.PREFERRED_SIZE)
 					.addContainerGap(440, Short.MAX_VALUE))
+				.addGroup(gl_gradient.createSequentialGroup()
+					.addContainerGap()
+					.addGroup(gl_gradient.createParallelGroup(Alignment.TRAILING)
+						.addComponent(bzgchckbxInstallBeezigforge, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1284, Short.MAX_VALUE)
+						.addComponent(lblBeezig, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 1284, Short.MAX_VALUE))
+					.addContainerGap())
+				.addGroup(Alignment.LEADING, gl_gradient.createSequentialGroup()
+					.addContainerGap()
+					.addComponent(button)
+					.addContainerGap(1226, Short.MAX_VALUE))
 		);
 		gl_gradient.setVerticalGroup(
 			gl_gradient.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_gradient.createSequentialGroup()
 					.addContainerGap()
 					.addComponent(button)
-					.addGap(163)
+					.addGap(159)
 					.addComponent(lblBeezig)
-					.addGap(88)
+					.addGap(53)
+					.addComponent(bzgchckbxInstallBeezigforge, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addComponent(txt, GroupLayout.PREFERRED_SIZE, 52, GroupLayout.PREFERRED_SIZE)
 					.addGap(39)
 					.addComponent(btnInstall, GroupLayout.PREFERRED_SIZE, 79, GroupLayout.PREFERRED_SIZE)
-					.addContainerGap(232, Short.MAX_VALUE))
+					.addContainerGap(226, Short.MAX_VALUE))
 		);
 		gradient.setLayout(gl_gradient);
 		setLayout(gl_contentPane);
-	
 	
 	}
 	private class SwingAction extends AbstractAction {
@@ -126,6 +140,7 @@ public class InstallBeezigStepTwo extends JPanel {
 		public void actionPerformed(ActionEvent e) {
 			StepManager.lastStep.add(InstallBeezigStepTwo.this);
 			Main.currentInstall.setChannel(txt.getSelectedIndex());
+			Main.currentInstall.installForge(bzgchckbxInstallBeezigforge.isSelected());
 			InstallBeezigStepDownload pane = new InstallBeezigStepDownload();
 			MainGuiNew.inst.setContentPane(pane);
 			MainGuiNew.inst.pack();
