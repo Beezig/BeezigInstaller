@@ -91,6 +91,7 @@ public class Downloader {
 					System.exit(0);
 				}
 			});
+			toUpdate.setString(I18N.s("general.done"));
 			toUpdateBtn.setText(I18N.s("general.close"));
 			toUpdateBtn.setEnabled(true);
 			toUpdateBtn.setBackground(new Color(7, 196, 76));
