@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.io.File;
 import java.net.URL;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.swing.AbstractAction;
 import javax.swing.Action;
@@ -31,14 +32,13 @@ import tk.roccodev.beezig.installer.utils.I18N;
 
 public class InstallBeezigStepDownload extends JPanel {
 
-	
-	private final Action action = new SwingAction();
+
 
 	/**
 	 * Create the frame.
 	 */
 	public InstallBeezigStepDownload() {
-	
+		
 		JProgressBar bzgbtnBeta = new JProgressBar();
 		bzgbtnBeta.setStringPainted(true);
 		bzgbtnBeta.setForeground(new Color(0, 0, 204));
@@ -46,15 +46,38 @@ public class InstallBeezigStepDownload extends JPanel {
 		bzgbtnBeta.setBackground(new Color(255, 255, 255));
 		
 		BeezigButton btnInstall = new BeezigButton();
+		btnInstall.setAction(new AbstractAction() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				back();
+			}
+		});
 		btnInstall.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 29));
 		btnInstall.setText(I18N.s("general.cancel"));
 		btnInstall.setBackground(new Color(204, 0, 51));
 		btnInstall.setForeground(Color.WHITE);
+		
+		JButton button = new JButton("");
+		button.setAction(new AbstractAction() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				back();
+			}
+		});
+		button.setEnabled(false);
+		button.setIcon(new ImageIcon(InstallBeezigStepDownload.class.getResource("/assets/icons/back_icn.png")));
+		button.setOpaque(false);
+		button.setBorderPainted(false);
+		button.setContentAreaFilled(false);
+		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
 
 		new Thread(new Runnable() {
 			@Override
 			public void run() {
 				try {
+				long cached = System.currentTimeMillis();
 				String ur = null;
 				String beezigForgeUrl = null;
 				if(Main.currentInstall.getChannel() == 1) {
@@ -79,17 +102,20 @@ public class InstallBeezigStepDownload extends JPanel {
 				if(!target.exists()) target.createNewFile();
 				Downloader d = new Downloader(new URL(ur), "bzgToUpdate.jar", "Beezig.jar");
 				btnInstall.setAction(new SwingAction_1(d));
+				button.setAction(new SwingAction(d));
+				button.setIcon(new ImageIcon(InstallBeezigStepDownload.class.getResource("/assets/icons/back_icn.png")));
 				btnInstall.setText(I18N.s("general.cancel"));
 				if(beezigForgeUrl != null) {
 					File targetFrg = new File(Main.MC_DIR + "/mods/bzgFrgToUpdate.jar");
 					if(!targetFrg.exists()) target.createNewFile();
-					d.download(target, bzgbtnBeta, btnInstall, false);
+					if(!d.download(target, bzgbtnBeta, btnInstall, false)) return;
 					
 					d = new Downloader(new URL(beezigForgeUrl), "bzgFrgToUpdate.jar", "BeezigForge.jar");
 					
-					d.download(targetFrg, bzgbtnBeta, btnInstall, true);
+					if(!d.download(targetFrg, bzgbtnBeta, btnInstall, true)) return;
 				}
 				else d.download(target, bzgbtnBeta, btnInstall, true);
+				System.out.println("Download completed in " + (System.currentTimeMillis() - cached) + " milliseconds.");
 				} catch(Exception e ) {
 					e.printStackTrace();
 				}
@@ -113,14 +139,7 @@ public class InstallBeezigStepDownload extends JPanel {
 
 		
 		
-		JButton button = new JButton("");
-		button.setEnabled(false);
-		button.setAction(action);
-		button.setIcon(new ImageIcon(InstallBeezigStepDownload.class.getResource("/assets/icons/back_icn.png")));
-		button.setOpaque(false);
-		button.setBorderPainted(false);
-		button.setContentAreaFilled(false);
-		button.setCursor(new Cursor(Cursor.HAND_CURSOR));
+		
 		
 	
 		
@@ -179,8 +198,14 @@ public class InstallBeezigStepDownload extends JPanel {
 	}
 	
 	private class SwingAction extends AbstractAction {
+		private Downloader dl;
+		
+		public SwingAction(Downloader dl) {
+			this.dl = dl;
+		}
 		public void actionPerformed(ActionEvent e) {
 			InstallBeezigStepDownload.this.back();
+			dl.stop();
 		}
 	}
 	private class SwingAction_1 extends AbstractAction {
@@ -191,8 +216,8 @@ public class InstallBeezigStepDownload extends JPanel {
 		}
 		
 		public void actionPerformed(ActionEvent e) {
-			dl.stop();
 			InstallBeezigStepDownload.this.back();
+			dl.stop();
 		}
 	}
 	

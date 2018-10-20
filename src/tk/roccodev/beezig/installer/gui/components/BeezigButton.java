@@ -8,6 +8,8 @@ import javax.swing.JButton;
 
 public class BeezigButton extends JButton {
 	
+	private Color cachedBackground;
+	
 	public BeezigButton() { this(true); }
 	
 	public BeezigButton(boolean hover) {
@@ -20,15 +22,37 @@ public class BeezigButton extends JButton {
 	            addMouseListener(new MouseAdapter() {
 	                @Override
 	                public void mouseEntered(MouseEvent e) {
-	                    setBackground(getBackground().darker());
+	                    setNoCache(getBackground().darker());
 	                }
 
 	                @Override
 	                public void mouseExited(MouseEvent e) {
-	                    setBackground(getBackground().brighter());
+	                    setNoCache(getBackground().brighter());
 	                }
+
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						setNoCache(cachedBackground);
+					}
+
+					@Override
+					public void mouseReleased(MouseEvent e) {
+						setNoCache(cachedBackground);
+					}
+	                
+	                
+	                
 	            });
 	}
 	
+	public void setNoCache(Color color) {
+		super.setBackground(color);
+	}
+	
+	@Override
+	public void setBackground(Color color) {
+		super.setBackground(color);
+		cachedBackground = color;
+	}
 
 }

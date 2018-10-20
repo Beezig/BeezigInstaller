@@ -26,7 +26,15 @@ public class Downloader {
 	private String toRename;
 	private boolean run = true;
 
-	public void download(File target, JProgressBar toUpdate, JButton toUpdateBtn, boolean complete) {
+	/**
+	 * Download a file from upstream to disk
+	 * @param target The file to copy stuff to
+	 * @param toUpdate A progress bar to update
+	 * @param toUpdateBtn A button to update
+	 * @param complete Whether it's the last operation of a panel lifecycle
+	 * @return If the panel should continue working (false if the action was stopped manually)
+	 */
+	public boolean download(File target, JProgressBar toUpdate, JButton toUpdateBtn, boolean complete) {
 		toUpdate.setValue(0);
 		toUpdateBtn.setEnabled(true);
 		BufferedInputStream in = null;
@@ -60,7 +68,7 @@ public class Downloader {
 			if (removeFile) {
 				target.delete();
 				toUpdateBtn.setEnabled(false);
-				return;
+				return false;
 			}
 
 			toUpdateBtn.setEnabled(false);
@@ -82,7 +90,7 @@ public class Downloader {
 
 			target.renameTo(new File(pluginsDir + "/" + toRename));
 
-			if(!complete) return;
+			if(!complete) return true;
 			
 			toUpdateBtn.setAction(new AbstractAction() {
 
@@ -114,6 +122,7 @@ public class Downloader {
 					e4.printStackTrace();
 				}
 		}
+		return true;
 	}
 
 	public void downloadOld(File target) throws IOException {
