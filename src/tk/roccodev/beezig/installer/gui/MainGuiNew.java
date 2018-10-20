@@ -68,12 +68,12 @@ public class MainGuiNew extends JFrame {
 
 		JLabel lblBeezig = new JLabel("Beezig");
 		lblBeezig.setForeground(new Color(255, 255, 255));
-		lblBeezig.setFont(new Font("Montserrat", Font.BOLD, 99));
+		lblBeezig.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 99));
 		lblBeezig.setHorizontalAlignment(SwingConstants.CENTER);
 
 		BeezigButton btnInstall = new BeezigButton();
 		btnInstall.setAction(action);
-		btnInstall.setFont(new Font("Montserrat", Font.BOLD, 29));
+		btnInstall.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 29));
 		btnInstall.setText(I18N.s("general.next"));
 		btnInstall.setBackground(new Color(7, 196, 76));
 		btnInstall.setForeground(Color.WHITE);

@@ -42,11 +42,11 @@ public class InstallBeezigStepDownload extends JPanel {
 		JProgressBar bzgbtnBeta = new JProgressBar();
 		bzgbtnBeta.setStringPainted(true);
 		bzgbtnBeta.setForeground(new Color(0, 0, 204));
-		bzgbtnBeta.setFont(new Font("Montserrat", Font.BOLD, 29));
+		bzgbtnBeta.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 29));
 		bzgbtnBeta.setBackground(new Color(255, 255, 255));
 		
 		BeezigButton btnInstall = new BeezigButton();
-		btnInstall.setFont(new Font("Montserrat", Font.BOLD, 29));
+		btnInstall.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 29));
 		btnInstall.setText(I18N.s("general.cancel"));
 		btnInstall.setBackground(new Color(204, 0, 51));
 		btnInstall.setForeground(Color.WHITE);
@@ -107,7 +107,7 @@ public class InstallBeezigStepDownload extends JPanel {
 
 		JLabel lblBeezig = new JLabel(I18N.s("step.download.title"));
 		lblBeezig.setForeground(new Color(255, 255, 255));
-		lblBeezig.setFont(new Font("Montserrat", Font.BOLD, 36));
+		lblBeezig.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 36));
 		lblBeezig.setHorizontalAlignment(SwingConstants.CENTER);
 
 
@@ -126,7 +126,7 @@ public class InstallBeezigStepDownload extends JPanel {
 		
 		JLabel lblAnInstallationOf = new JLabel(I18N.s("step.download.desc"));
 		lblAnInstallationOf.setForeground(Color.WHITE);
-		lblAnInstallationOf.setFont(new Font("Montserrat", Font.BOLD, 15));
+		lblAnInstallationOf.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 15));
 		lblAnInstallationOf.setHorizontalAlignment(SwingConstants.CENTER);
 
 		GroupLayout gl_gradient = new GroupLayout(gradient);

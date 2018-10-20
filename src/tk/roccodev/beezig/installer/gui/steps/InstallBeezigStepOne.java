@@ -55,12 +55,12 @@ public class InstallBeezigStepOne extends JPanel {
 
 		JLabel lblBeezig = new JLabel(I18N.s("step.dir"));
 		lblBeezig.setForeground(new Color(255, 255, 255));
-		lblBeezig.setFont(new Font("Montserrat", Font.BOLD, 36));
+		lblBeezig.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 36));
 		lblBeezig.setHorizontalAlignment(SwingConstants.CENTER);
 
 		BeezigButton btnInstall = new BeezigButton();
 		btnInstall.setAction(action_1);
-		btnInstall.setFont(new Font("Montserrat", Font.BOLD, 29));
+		btnInstall.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 29));
 		btnInstall.setText(I18N.s("general.next"));
 		btnInstall.setBackground(new Color(7, 196, 76));
 		btnInstall.setForeground(Color.WHITE);

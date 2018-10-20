@@ -15,7 +15,7 @@ import tk.roccodev.beezig.installer.utils.InstallationProcess;
 public class Main {
 
 	public static File MC_DIR;
-
+	public static Font MONTSERRAT;
 	public static String VERSION = "2.0";
 
 	
@@ -50,9 +50,7 @@ public class Main {
 		
 		I18N.init();
 
-		GraphicsEnvironment ge = 
-		         GraphicsEnvironment.getLocalGraphicsEnvironment();
-		     ge.registerFont(Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/assets/fonts/Montserrat.ttf")));
+		MONTSERRAT = Font.createFont(Font.TRUETYPE_FONT, Main.class.getResourceAsStream("/assets/fonts/Montserrat.ttf"));
 		
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {

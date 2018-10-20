@@ -14,6 +14,7 @@ import javax.swing.AbstractAction;
 import javax.swing.GroupLayout;
 import javax.swing.GroupLayout.Alignment;
 
+import tk.roccodev.beezig.installer.Main;
 import tk.roccodev.beezig.installer.utils.I18N;
 
 import javax.swing.JLabel;
@@ -36,7 +37,7 @@ public class ExceptionPanel extends JPanel {
 
 		JLabel lblBeezig = new JLabel("Uhm... looks like something went wrong.");
 		lblBeezig.setForeground(new Color(255, 255, 255));
-		lblBeezig.setFont(new Font("Montserrat", Font.BOLD, 36));
+		lblBeezig.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 36));
 		lblBeezig.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		textField = new JTextArea();
@@ -64,7 +65,7 @@ public class ExceptionPanel extends JPanel {
 				}
 			}
 		});
-		btnInstall.setFont(new Font("Montserrat", Font.BOLD, 29));
+		btnInstall.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 29));
 		btnInstall.setText(I18N.s("error.report"));
 		btnInstall.setBackground(new Color(114, 137, 218));
 		btnInstall.setForeground(Color.WHITE);

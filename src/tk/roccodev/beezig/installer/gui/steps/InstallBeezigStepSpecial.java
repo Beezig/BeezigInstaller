@@ -53,12 +53,12 @@ public class InstallBeezigStepSpecial extends JPanel {
 
 		JLabel lblBeezig = new JLabel(I18N.s("step.special.title"));
 		lblBeezig.setForeground(new Color(255, 255, 255));
-		lblBeezig.setFont(new Font("Montserrat", Font.BOLD, 36));
+		lblBeezig.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 36));
 		lblBeezig.setHorizontalAlignment(SwingConstants.CENTER);
 
 		BeezigButton btnInstall = new BeezigButton();
 		btnInstall.setAction(action_1);
-		btnInstall.setFont(new Font("Montserrat", Font.BOLD, 29));
+		btnInstall.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 29));
 		btnInstall.setText(I18N.s("channel.stable"));
 		btnInstall.setBackground(new Color(7, 196, 76));
 		btnInstall.setForeground(Color.WHITE);
@@ -77,17 +77,17 @@ public class InstallBeezigStepSpecial extends JPanel {
 		bzgbtnBeta.setAction(action_2);
 		bzgbtnBeta.setText(I18N.s("channel.beta"));
 		bzgbtnBeta.setForeground(Color.WHITE);
-		bzgbtnBeta.setFont(new Font("Montserrat", Font.BOLD, 29));
+		bzgbtnBeta.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 29));
 		bzgbtnBeta.setBackground(new Color(51, 102, 255));
 		
 		JLabel lblAnInstallationOf = new JLabel(I18N.s("step.special.desc"));
 		lblAnInstallationOf.setForeground(Color.WHITE);
-		lblAnInstallationOf.setFont(new Font("Montserrat", Font.BOLD, 15));
+		lblAnInstallationOf.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 15));
 		lblAnInstallationOf.setHorizontalAlignment(SwingConstants.CENTER);
 		
 		chckbxInstallBeezigforge = new BeezigCheckbox();
 		chckbxInstallBeezigforge.setForeground(new Color(255, 255, 255));
-		chckbxInstallBeezigforge.setFont(new Font("Montserrat", Font.BOLD, 15));
+		chckbxInstallBeezigforge.setFont(Main.MONTSERRAT.deriveFont(Font.BOLD, 15));
 		chckbxInstallBeezigforge.setText(I18N.s("step.special.forge"));
 		chckbxInstallBeezigforge.setHorizontalAlignment(SwingConstants.CENTER);
 		if(!BeezigDir.hasForge()) {
