@@ -12,6 +12,8 @@ import java.net.URL;
 import java.net.URLConnection;
 import java.nio.channels.Channels;
 import java.nio.channels.ReadableByteChannel;
+import java.nio.file.Files;
+import java.nio.file.StandardCopyOption;
 
 import javax.swing.AbstractAction;
 import javax.swing.JButton;
@@ -87,8 +89,12 @@ public class Downloader {
 					f.delete();
 				}
 			}
-
-			target.renameTo(new File(pluginsDir + "/" + toRename));
+			
+			in.close();
+			out.close();
+			
+			File renameTo = new File(pluginsDir + "/" + toRename);
+			Files.move(target.toPath(), renameTo.toPath(), StandardCopyOption.REPLACE_EXISTING);
 
 			if(!complete) return true;
 			
